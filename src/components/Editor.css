@@ -1,0 +1,474 @@
+.editor-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff; /* Light mode main area */
+}
+
+body, html {
+  background: #edeef0; /* Light mode sidebar */
+}
+
+.editor-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 20px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.editor-tabs button {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.editor-tabs button.active {
+  background: white;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.editor-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff !important;
+}
+
+.markdownx-editor {
+  flex: 1;
+  min-height: 60vh;
+  padding: 1rem;
+  border: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #fff !important;
+  color: #222 !important;
+}
+
+.preview {
+  padding: 20px;
+  min-height: 400px;
+  background: #fff !important;
+  overflow-y: auto;
+  color: #222 !important;
+}
+
+.how-content {
+  padding: 20px;
+  min-height: 400px;
+  background: #fff; /* Light mode how area */
+  color: #222;
+}
+
+.how-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  background: #f8f9fa; /* Light mode table bg */
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.how-content th, .how-content td {
+  border: 1px solid #e5e7eb;
+  padding: 16px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.how-content th {
+  background: #f3f4f6;
+  color: #222;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.how-content tr {
+  background: #f8f9fa;
+}
+
+.how-content tr:nth-child(even) {
+  background: #fff;
+}
+
+.how-content td {
+  color: #222;
+  font-size: 1em;
+}
+
+.how-content ul, .how-content ol {
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+.how-content li {
+  background: none;
+  color: #222;
+  font-family: inherit;
+  padding: 0 0 6px 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.how-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.how-content a:hover {
+  color: #1d4ed8;
+}
+
+.how-content code {
+  background: #f3f4f6;
+  color: #222;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.97em;
+}
+
+.how-content .text-muted {
+  color: #6b7280;
+}
+
+.how-content .spoiler {
+  background: #e5e7eb;
+  color: #e5e7eb;
+  border-radius: 3px;
+  padding: 0 4px;
+}
+
+.how-content .spoiler:hover {
+  color: #222;
+}
+
+.metadata-section {
+  margin-bottom: 20px;
+}
+
+.metadata-toggle {
+  padding: 8px 16px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  color: #6b7280;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.metadata-toggle:hover {
+  background: #e5e7eb;
+}
+
+.metadata-content {
+  margin-top: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.metadata-editor {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border: none;
+  resize: vertical;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.editor-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.url-edit-code {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+
+.url-input,
+.edit-code-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.submit-button {
+  padding: 8px 24px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+  background: #2563eb;
+}
+
+.save-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.3em 1em;
+  font-size: 1.1em;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.save-btn:hover, .save-btn:focus {
+  background: #1e40af;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+}
+
+/* Dark mode styles */
+.dark-mode body, .dark-mode html {
+  background: #181a1b;
+}
+
+.dark-mode .editor-container {
+  background-color: #1c1c1c;
+}
+
+.dark-mode .editor-tabs {
+  background-color: #333;
+}
+
+.dark-mode .editor-tabs button {
+  color: #ccc;
+}
+
+.dark-mode .editor-tabs button.active {
+  background: #262626;
+  color: white;
+}
+
+.dark-mode .editor-content {
+  background-color: #262626;
+  border-color: #333;
+}
+
+.dark-mode .markdownx-editor {
+  background: #262626;
+  color: white;
+}
+
+.dark-mode .preview {
+  background: #232323 !important;
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .how-content {
+  background: #262626;
+  color: white;
+}
+
+.dark-mode .how-content h2 {
+  color: #fff;
+}
+
+.dark-mode .how-content p {
+  color: #e0e0e0;
+}
+
+.dark-mode .how-content li {
+  background: #333;
+  color: #e0e0e0;
+}
+
+.dark-mode .how-content code {
+  background: #181818;
+  color: #fff;
+}
+
+.dark-mode .metadata-toggle {
+  background: #333;
+  border-color: #444;
+  color: #ccc;
+}
+
+.dark-mode .metadata-toggle:hover {
+  background: #444;
+}
+
+.dark-mode .metadata-content {
+  border-color: #444;
+}
+
+.dark-mode .metadata-editor {
+  background: #262626;
+  color: white;
+}
+
+.dark-mode .url-input,
+.dark-mode .edit-code-input {
+  background: #262626;
+  color: white;
+  border-color: #444;
+}
+
+.dark-mode .how-content,
+.dark-mode .how-content table,
+.dark-mode .how-content th,
+.dark-mode .how-content td,
+.dark-mode .how-content tr {
+  background: #232323 !important;
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .how-content th {
+  background: #181818 !important;
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .how-content tr:nth-child(even) {
+  background: #262626 !important;
+}
+
+.dark-mode .how-content td {
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .how-content li {
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .how-content a {
+  color: #4ea1f7 !important;
+}
+
+.dark-mode .how-content a:hover {
+  color: #90cdf4 !important;
+}
+
+.dark-mode .how-content code {
+  background: #181818 !important;
+  color: #fff !important;
+}
+
+.dark-mode .how-content .text-muted {
+  color: #b0b0b0 !important;
+}
+
+.dark-mode .how-content .spoiler {
+  background: #444 !important;
+  color: #444 !important;
+}
+
+.dark-mode .how-content .spoiler:hover {
+  color: #fff !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .editor-container {
+    padding: 10px;
+  }
+
+  .editor-options {
+    flex-direction: column;
+  }
+
+  .url-edit-code {
+    width: 100%;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+
+  .how-content table, .how-content th, .how-content td {
+    font-size: 0.95em;
+    padding: 10px 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .editor-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px;
+  }
+  .editor-actions > div,
+  .editor-actions button {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-bottom: 8px;
+  }
+  .save-btn,
+  .btn-danger,
+  .theme-toggle {
+    width: 100% !important;
+    border-radius: 8px !important;
+    justify-content: center;
+  }
+  .theme-toggle {
+    height: 48px !important;
+    font-size: 1.5rem !important;
+  }
+}
+
+.theme-toggle {
+  background: #23272f;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-left: 12px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  color: #fff;
+}
+.theme-toggle:hover, .theme-toggle:focus {
+  background: #374151;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.3em 1em;
+  font-size: 1.1em;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 12px;
+  box-shadow: 0 2px 8px rgba(220,53,69,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-danger:hover, .btn-danger:focus {
+  background: #b91c1c;
+  box-shadow: 0 4px 16px rgba(220,53,69,0.15);
+}

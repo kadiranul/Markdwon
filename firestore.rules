@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Notes collection rules
+    match /notes/{noteId} {
+      // Allow read access to all notes
+      allow read: if true;
+      
+      // Allow create if the document has required fields
+      allow create: if request.resource.data.keys().hasAll(['content', 'createdAt', 'editCode'])
+                   && request.resource.data.content is string
+                   && request.resource.data.editCode is string;
+      
+      // Allow update if the document exists and has the correct edit code
+      allow update: if resource.data.editCode == request.resource.data.editCode
+                   && request.resource.data.content is string;
+      
+      // Allow delete for everyone (editCode is checked on client side)
+      allow delete: if true;
+    }
+  }
+} 
