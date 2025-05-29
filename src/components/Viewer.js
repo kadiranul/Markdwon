@@ -5,6 +5,7 @@ import './Viewer.css';
 import { db } from '../firebase';
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { toggleTheme, isDarkMode } from '../theme';
+import NotFound from './NotFound';
 
 // Add marked extension and patch link renderer at the top-level
 marked.use({
@@ -132,7 +133,7 @@ const Viewer = () => {
   };
 
   if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (error) return <NotFound />;
 
   // Render markdown and preserve blank lines
   const renderedHtml = marked(content).replace(/(<\/p>)(\s*<p>)/g, '$1<br>$2').replace(/\n{2,}/g, '<br><br>');
@@ -157,83 +158,61 @@ const Viewer = () => {
         style={{ border: '1px solid var(--border-color)', borderRadius: 8, padding: 24 }}
         dangerouslySetInnerHTML={{ __html: renderedHtml }}
       />
-      <div style={{ marginTop: '1.5rem', textAlign: 'center', display: 'flex', justifyContent: 'center', gap: '8px' }}>
-        <button
-          type="button"
-          className="edit-btn"
-          onClick={handleEdit}
-          style={{ marginRight: '-0.2rem' }}
-        >
-          Edit
+      <div className="viewer-buttons">
+        <button type="button" className="edit-btn" onClick={handleEdit}>
+          <i className="fa fa-pen"></i> <span>Edit</span>
         </button>
-        <button
-          type="button"
-          className="btn-danger"
-          onClick={handleDelete}
-        >
-          Delete
+        <button type="button" className="delete-btn" onClick={handleDelete}>
+          <i className="fa fa-trash"></i> <span>Delete</span>
         </button>
-        <button
-          type="button"
-          className="btn-secondary"
-          onClick={() => navigate('/')}
-        >
-          New Note
+        <button type="button" className="newnote-btn" onClick={() => navigate('/') }>
+          <i className="fa fa-plus"></i> <span>New</span>
         </button>
-        {showEditPrompt && (
-          <div className="modal-backdrop">
-            <div className="modal">
-              <form onSubmit={confirmEdit} className="edit-code-form">
-                <input
-                  type="text"
-                  value={editCodeInput}
-                  onChange={e => setEditCodeInput(e.target.value)}
-                  placeholder="Enter edit code"
-                  className="form-control"
-                  style={{ marginBottom: '0.5rem' }}
-                />
-                <button type="submit" className="btn btn-primary" style={{ marginRight: '0.5rem' }}>Submit</button>
-                <button type="button" className="btn btn-secondary" onClick={() => { setShowEditPrompt(false); setEditCodeInput(''); setEditCodeError(''); }}>Cancel</button>
-                {editCodeError && <div className="error">{editCodeError}</div>}
-              </form>
-            </div>
-          </div>
-        )}
-        {showDeletePrompt && (
-          <div className="modal-backdrop">
-            <div className="modal">
-              <form onSubmit={confirmDelete} className="edit-code-form">
-                <input
-                  type="text"
-                  value={editCodeInput}
-                  onChange={e => setEditCodeInput(e.target.value)}
-                  placeholder="Enter edit code to delete"
-                  className="form-control"
-                  style={{ marginBottom: '0.5rem' }}
-                />
-                <button type="submit" className="btn btn-danger" style={{ marginRight: '0.5rem' }}>Delete</button>
-                <button type="button" className="btn btn-secondary" onClick={() => { setShowDeletePrompt(false); setEditCodeInput(''); setEditCodeError(''); }}>Cancel</button>
-                {editCodeError && <div className="error">{editCodeError}</div>}
-              </form>
-            </div>
-          </div>
-        )}
-        <button
-          type="button"
-          className="copy-btn"
-          onClick={handleCopy}
-        >
-          {copied ? 'Copied!' : 'Copy Link'}
+        <button type="button" className="copy-btn" onClick={handleCopy}>
+          <i className="fa fa-link"></i> <span>{copied ? 'Copied!' : 'Copy'}</span>
         </button>
-        <button
-          className="theme-toggle"
-          onClick={handleThemeToggle}
-          title="Toggle dark/light mode"
-          style={{ marginLeft: 'auto' }}
-        >
-          {isDarkMode() ? <i class="fa-solid fa-moon"></i> : <i className="fa-solid fa-sun"></i>}
+        <button className="theme-btn" onClick={handleThemeToggle} title="Toggle dark/light mode">
+          {isDarkMode() ? <i className="fa fa-moon"></i> : <i className="fa fa-sun"></i>}
         </button>
       </div>
+      {showEditPrompt && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <form onSubmit={confirmEdit} className="edit-code-form">
+              <input
+                type="text"
+                value={editCodeInput}
+                onChange={e => setEditCodeInput(e.target.value)}
+                placeholder="Enter edit code"
+                className="form-control"
+                style={{ marginBottom: '0.5rem' }}
+              />
+              <button type="submit" className="btn btn-primary" style={{ marginRight: '0.5rem' }}>Submit</button>
+              <button type="button" className="btn btn-secondary" onClick={() => { setShowEditPrompt(false); setEditCodeInput(''); setEditCodeError(''); }}>Cancel</button>
+              {editCodeError && <div className="error">{editCodeError}</div>}
+            </form>
+          </div>
+        </div>
+      )}
+      {showDeletePrompt && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <form onSubmit={confirmDelete} className="edit-code-form">
+              <input
+                type="text"
+                value={editCodeInput}
+                onChange={e => setEditCodeInput(e.target.value)}
+                placeholder="Enter edit code to delete"
+                className="form-control"
+                style={{ marginBottom: '0.5rem' }}
+              />
+              <button type="submit" className="btn btn-danger" style={{ marginRight: '0.5rem' }}>Delete</button>
+              <button type="button" className="btn btn-secondary" onClick={() => { setShowDeletePrompt(false); setEditCodeInput(''); setEditCodeError(''); }}>Cancel</button>
+              {editCodeError && <div className="error">{editCodeError}</div>}
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

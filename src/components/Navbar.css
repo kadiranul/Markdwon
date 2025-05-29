@@ -63,3 +63,27 @@
 .dark-mode .theme-toggle:hover {
   background-color: #374151;
 } 
+.viewer-content,
+.preview {
+  word-break: break-all !important;
+  overflow-wrap: break-word !important;
+}
+
+.viewer-content iframe,
+.content iframe,
+.preview iframe {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  box-sizing: border-box;
+  min-height: 350px;
+} 
+
+@media (max-width: 600px) {
+  .viewer-content iframe,
+  .content iframe,
+  .preview iframe {
+    min-height: 0px;
+  } 
+}

@@ -633,7 +633,7 @@ const Editor = () => {
               {editError && <div className="error">{editError}</div>}
             </form>
           )}
-          <div className="view-actions" style={{ marginTop: '1rem', textAlign: 'center' }}>
+          <div className="view-actions" style={{ marginTop: '1rem', textAlign: 'center'}}>
             <button type="button" className="btn btn-primary" style={{ marginRight: '0.5rem'}} onClick={() => setShowEditInput(true)}>
               Edit
             </button>
