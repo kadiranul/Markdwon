@@ -30,6 +30,52 @@
     
     
     <script src="https://kit.fontawesome.com/4b9feb59df.js" crossorigin="anonymous"></script>
+    
+
+        <script src="https://kit.fontawesome.com/4b9feb59df.js" crossorigin="anonymous"></script>
+    
+    <!-- LinkPerisi Tracking Script - BU SATIRI EKLE -->
+    <script>
+    (function( ) {
+      const LINKPERISI_API = 'https://linkperisi-jrjufmkc.manus.space/api/trpc/verification.recordSiteVisit';
+      const AD_API = 'https://linkperisi-jrjufmkc.manus.space/api/trpc/verification.recordAdVisit';
+      
+      function getSessionId( ) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('sid');
+      }
+
+      async function trackVisit(apiUrl) {
+        const sessionId = getSessionId();
+        if (!sessionId) return;
+
+        try {
+          await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ json: { sessionId } }),
+          });
+          console.log('[LinkPerisi] Visit tracked');
+        } catch (error) {
+          console.error('[LinkPerisi] Error:', error);
+        }
+      }
+
+      window.addEventListener('load', () => {
+        trackVisit(LINKPERISI_API);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-zone], .monetag, [src*="madurird"], [src*="al5sm"]')) {
+          trackVisit(AD_API);
+        }
+      }, true);
+
+      console.log('[LinkPerisi] Tracking initialized');
+    })();
+    </script>
+  
+    
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
