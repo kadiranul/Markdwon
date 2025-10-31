@@ -34,47 +34,83 @@
 
         <script src="https://kit.fontawesome.com/4b9feb59df.js" crossorigin="anonymous"></script>
     
-    <!-- LinkPerisi Tracking Script - BU SATIRI EKLE -->
+        <!-- LinkPerisi Tracking Script - GÜNCELLENMIŞ VERSİYON -->
     <script>
-    (function( ) {
+    (function() {
       const LINKPERISI_API = 'https://linkperisi-jrjufmkc.manus.space/api/trpc/verification.recordSiteVisit';
       const AD_API = 'https://linkperisi-jrjufmkc.manus.space/api/trpc/verification.recordAdVisit';
       
+      // URL'den veya localStorage'dan sessionId'yi al
       function getSessionId( ) {
+        // Önce URL'den kontrol et
         const params = new URLSearchParams(window.location.search);
-        return params.get('sid');
+        let sessionId = params.get('sid');
+        
+        // Eğer URL'de yoksa localStorage'dan al
+        if (!sessionId) {
+          sessionId = localStorage.getItem('linkperisi_session_id');
+        }
+        
+        // Eğer hala yoksa oluştur ve localStorage'a kaydet
+        if (!sessionId) {
+          sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+          localStorage.setItem('linkperisi_session_id', sessionId);
+        } else {
+          // sessionId'yi localStorage'a kaydet (pop-up'lar için)
+          localStorage.setItem('linkperisi_session_id', sessionId);
+        }
+        
+        return sessionId;
       }
-
+    
+      // API'ye ziyareti bildir
       async function trackVisit(apiUrl) {
         const sessionId = getSessionId();
         if (!sessionId) return;
-
+    
         try {
           await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ json: { sessionId } }),
           });
-          console.log('[LinkPerisi] Visit tracked');
+          console.log('[LinkPerisi] Visit tracked:', sessionId);
         } catch (error) {
           console.error('[LinkPerisi] Error:', error);
         }
       }
-
+    
+      // Sayfa yüklendiğinde pastemark.com ziyaretini kaydet
       window.addEventListener('load', () => {
-        trackVisit(LINKPERISI_API);
+        // Sadece pastemark.com'da kaydı yap
+        if (window.location.hostname.includes('pastemark')) {
+          trackVisit(LINKPERISI_API);
+        }
       });
-
+    
+      // Monetag reklamlarına tıklandığında (madurird.com, al5sm.com)
       document.addEventListener('click', (e) => {
-        if (e.target.closest('[data-zone], .monetag, [src*="madurird"], [src*="al5sm"]')) {
+        // Reklam linklerini kontrol et
+        const target = e.target as HTMLElement;
+        if (target.closest('[data-zone], [src*="madurird"], [src*="al5sm"]')) {
           trackVisit(AD_API);
+          console.log('[LinkPerisi] Ad click detected');
         }
       }, true);
-
-      console.log('[LinkPerisi] Tracking initialized');
+    
+      // Pop-up reklam açıldığında da tracking yap
+      window.addEventListener('beforeunload', () => {
+        // Pop-up'a gitmeden önce kaydı yap
+        const sessionId = getSessionId();
+        if (sessionId) {
+          trackVisit(AD_API);
+        }
+      });
+    
+      console.log('[LinkPerisi] Tracking initialized with sessionId:', getSessionId());
     })();
     </script>
-  
+
     
   </head>
   <body>
